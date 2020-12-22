@@ -14,6 +14,7 @@ Our goal is to develop AlphaXmas, a generator of short monophonic christmas caro
 After we get some music generation results from this model, we use processing.js and L-system to generate a 3d Christmas Tree Graphical Model on the webpage. Ideally, the audience can both listen to the newly-generated christmas melody composition and watch the tree model.
 
 ## Melody Generation
+Accroding to the collected dataset, we did melodic analysis using Music21. Then we appled LSTM-RNN model to generate a sequence of melody(pitch, duration) as output.
 
 
 ## Tree Generation
@@ -25,7 +26,7 @@ The following are the aspects we would like to improve in the future:
 - a detail L-system modelling on Tree Generation: we would like to adjust the branches shape, rotaion angles, the decreasing width of the main tree trunk e.t.c
 
 ## Resources
-1. Keras, Tensorflow, scikit-learn: Machine Learning in Python
+1. [Keras](https://keras.io), [Tensorflow](https://www.tensorflow.org), [scikit-learn](https://scikit-learn.org/): Machine Learning in Python
 2. [p5.js](https://p5js.org): JavaScript port of Processing
 3. [Music21](http://web.mit.edu/music21/): Computer-aided Musicology Tool
 
