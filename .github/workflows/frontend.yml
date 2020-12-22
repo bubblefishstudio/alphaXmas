@@ -1,0 +1,28 @@
+name: Build and Deploy Front-End
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Make deploy dir 🔧
+        run: mkdir ./deploy
+
+      - name: Copy docs/ folder 🔧
+        run : cp -r ./docs ./deploy/
+
+#      - name: Setup custom domain 🔧
+#        run: echo domain.tld > ./deploy/CNAME
+
+      - name: Deploy 🚀
+        uses: peaceiris/actions-gh-pages@v3.6.1
+        with:
+          publish_dir: ./deploy
+          github_token: ${{ secrets.GITHUB_TOKEN }}
