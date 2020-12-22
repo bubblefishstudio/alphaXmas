@@ -9,9 +9,9 @@ The Slides for [Hackathon Pitch]()/ [Demo Presentation]() can be found here.
 [pic](link)
 
 ## Project Abstract
-Our goal is to develop AlphaXmas, a generator of short monophonic christmas carol compositions based on a LSTM-RNN Model, since Recurrent Neural Networks have been researched to be effective for hand-writing recognition, speech recognition and music generation. We will train the model from the dataset [The Hymns and Carols of Christmas](https://www.hymnsandcarolsofchristmas.com) of around 1k historical compositions in MusicXML/ABC Notation. We will also analyze which is the most suitable representation of the input and output data of the network. Finally we will generate several short music pieces using the trained model and convert them to audio for playback, and evaluate some aspects of the resulting works to observe if we obtained something interesting and meaningful.
+Our goal is to develop AlphaXmas, a generator of short monophonic christmas carol compositions based on a LSTM-RNN Model, since Recurrent Neural Networks have been researched to be effective for hand-writing recognition, speech recognition and music generation. We train the model from the dataset [The Hymns and Carols of Christmas](https://www.hymnsandcarolsofchristmas.com) of around 1k historical compositions in MusicXML/ABC Notation. We also analyze which is the most suitable representation of the input and output data of the network. Finally we generate several short music pieces using the trained model and convert them to audio for playback, and evaluate some aspects of the resulting works to observe if we obtained something interesting and meaningful.
 
-After we get some music generation results from this model, we will use processing.js and L-system to generate a 3d Christmas Tree Graphical Model on the webpage. Ideally, the audience can both listen to the newly-generated christmas melody composition and watch the tree model.
+After we get some music generation results from this model, we use processing.js and L-system to generate a 3d Christmas Tree Graphical Model on the webpage. Ideally, the audience can both listen to the newly-generated christmas melody composition and watch the tree model.
 
 ## Melody Generation
 
