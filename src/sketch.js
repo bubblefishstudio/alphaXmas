@@ -1,127 +1,115 @@
-let axiom = "FTZFFF";
-let sentence = axiom;
-let angles, len, epoch=0;
+let sentence, angles, len, epoch;
 
-let rules = [
-  {
-    a:"T",
-    b:"/!FFBBBBBBT"
-  },
-  {
-    a:"B",
-    b:"////[++++FY]",
-  },
-  {
-    a: "W",
-    b: "!+X[-W]Z?"
-  },
-  {
-    a: "X",
-    b: "-W[+X]Z"
-  },
-  {
-    a: "Y",
-    b: "Z!Y?"
-  },
-  {
-    a: "Z",
-    b: "[--FFF][++FFF]F"
-  },
-];
+let rules = new Map(); // defined externally
 
-let commands = {
-  "F": () => {
-    line(0,0,0, 0,0,len);
-    translate(0,0,len);
-  },
-  "f": () => {
-    translate(0,0,len);
-  },
-  "+": () => {
-    rotateY(-angles);
-  },
-  "-": () => {
-    rotateY(angles);
-  },
-  "ˆ": () => {
-    rotateX(angles);
-  },
-  "&": () => {
-    rotateX(-angles);
-  },
-  "\\": () => {
-    rotateZ(angles);
-  },
-  "/": () => {
-    rotateZ(-angles);
-  },
-  "|": () => {
-    rotateY(PI);
-  },
-  "[": () => {
-    push();
-  },
-  "]": () => {
-    pop();
-  },
-  "!": () => {
-    len *= 0.9;
-  },
-  "?": () => {
-    len /= 0.9;
-  },
-  "'": () => {
-    // nothing for now
-    // change color
-  },
-};
+fetch("./tree_rules.tsv").then(resp => resp.text()).then(body => {
+	body.split("\n").slice(1).forEach(row => {
+		if (row.length > 0) {
+			let [a, b] = row.split("\t");
+			rules.set(a, b);
+		}
+	})
+});
 
-function generate() {
-  let nextsentence = "";
-  for (let i = 0; i < sentence.length; i++) {
-    let current = sentence.charAt(i);
-    let found = false;
-    for (var j = 0; j < rules.length; j++) {
-      if (current == rules[j].a) {
-        found = true;
-        nextsentence += rules[j].b;
-        break;
-      }
-    }
-    if (!found) {
-      nextsentence += current;
-    }
-  }
-  sentence = nextsentence;
-  console.log(sentence);
-  leaf();
+let commands = new Map([
+	["F", () => {
+		line(0,0,0, 0,0,len);
+		translate(0,0,len);
+	}],
+	["f", () => {
+		translate(0,0,len);
+	}],
+	["+", () => {
+		rotateY(-angles);
+	}],
+	["-", () => {
+		rotateY(angles);
+	}],
+	["ˆ", () => {
+		rotateX(angles);
+	}],
+	["&", () => {
+		rotateX(-angles);
+	}],
+	["\\", () => {
+		rotateZ(angles);
+	}],
+	["/", () => {
+		rotateZ(-angles);
+	}],
+	["|", () => {
+		rotateY(PI);
+	}],
+	["[", () => {
+		push();
+	}],
+	["]", () => {
+		pop();
+	}],
+	["!", () => {
+		len *= 0.9;
+	}],
+	["?", () => {
+		len /= 0.9;
+	}],
+	["'", () => {
+		// nothing for now
+		// change color
+	}],
+]);
+
+function generate(sentence) {
+	let nextsentence = "";
+	for (let i = 0; i < sentence.length; i++) {
+		let current = sentence.charAt(i);
+		let replacement = rules.get(current) || current;
+		nextsentence += replacement;
+	}
+	return nextsentence;
 }
 
-//functions
-function leaf() {
-  len = 5 + (epoch++)*0.5;
-  background(51);
-  stroke(255, 100);
-  // set origin and axes rotation
-  translate(0, height / 2);
-  rotateX(PI/2);
-  for (let i = 0; i < sentence.length; i++) {
-    let current = sentence.charAt(i);
-    if (commands[current] !== undefined)
-      commands[current]();
-  }
-}
+// p5.js functions
 
 function setup() {
-  angles=radians(15);
-  createCanvas(600, 400, WEBGL);
-  background(51);
-  console.log(sentence);
-  leaf();
-  let button = createButton("Generate");
-  button.mousePressed(generate);
+	const axiom="FTZFFF";
+	angles = radians(15);
+	sentence = axiom;
+	epoch = 0;
+
+	createCanvas(window.innerWidth, window.innerHeight, WEBGL);
+	background(51);
+	frameRate(1);
+
+	noLoop(); // start afterwards
+}
+
+function mousePressed() {
+	console.log("Started");
+	loop();
 }
 
 function draw() {
-  
+	console.log("draw")
+	if (epoch > 15) {
+		console.log("Epoch limit reched");
+		noLoop();
+		return;
+	} // stop after 10 iterations
+
+	epoch++;
+	sentence = generate(sentence);
+	len = height/50 + epoch * 0.5;
+
+	background(51);
+	stroke(255, 100);
+
+	// set origin and axes rotation
+	translate(0, height / 2);
+	rotateX(PI/2);
+
+	for (let i = 0; i < sentence.length; i++) {
+		let current = sentence.charAt(i);
+		if (commands.get(current) !== undefined)
+			commands.get(current)();
+	}
 }
