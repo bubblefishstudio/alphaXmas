@@ -95,7 +95,7 @@ function mousePressed() {
 
 function draw() {
 	console.log("draw")
-	if (epoch > 15) {
+	if (epoch > 20) {
 		console.log("Epoch limit reched");
 		noLoop();
 		return;
@@ -103,10 +103,10 @@ function draw() {
 
 	epoch++;
 	sentence = generate(sentence);
-	len = height/50 + epoch * 0.5;
+	len = height/40 + epoch * 0.5;
 
 	background(51);
-	stroke(255, 100);
+	stroke(255, 200);
 
 	// set origin and axes rotation
 	translate(0, height / 2);
@@ -128,7 +128,7 @@ async function loadMelody() {
 	const pitch_vocab_size = 34
 	const duration_vocab_size = 29
 	// ----------------------------------------------
-	const seed = [[parseInt(Math.random() * pitch_vocab_size + 1), 8], [parseInt(Math.random() * pitch_vocab_size + 1), 8]]
+	const seed = seeds[parseInt(Math.random() * seeds_len)]
 	const mel_vec = generateMelodyVector(model, seed, 40)
 	console.log(mel_vec)
 	return vec2midi(mel_vec)
