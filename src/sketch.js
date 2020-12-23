@@ -129,7 +129,7 @@ async function loadMelody() {
 	const duration_vocab_size = 29
 	// ----------------------------------------------
 	const seed = [[parseInt(Math.random() * pitch_vocab_size + 1), 8], [parseInt(Math.random() * pitch_vocab_size + 1), 8]]
-	const mel_vec = generateMelodyVector(model, seed, 80)
+	const mel_vec = generateMelodyVector(model, seed, 40)
 	console.log(mel_vec)
 	return vec2midi(mel_vec)
 }
