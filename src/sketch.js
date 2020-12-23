@@ -128,8 +128,8 @@ async function loadMelody() {
 	const pitch_vocab_size = 34
 	const duration_vocab_size = 29
 	// ----------------------------------------------
-	const seed = [parseInt(Math.random() * pitch_vocab_size + 1), parseInt(Math.random() * duration_vocab_size + 1)]
-	const mel_vec = generateMelodyVector(model, seed, 20)
+	const seed = [[parseInt(Math.random() * pitch_vocab_size + 1), 8], [parseInt(Math.random() * pitch_vocab_size + 1), 8]]
+	const mel_vec = generateMelodyVector(model, seed, 80)
 	console.log(mel_vec)
 	return vec2midi(mel_vec)
 }
@@ -137,13 +137,13 @@ async function loadMelody() {
 function generateMelodyVector(model, seed, maxlen = 80) {
 	let input_eval = tf.expandDims(seed, 0)
 
-	generated = [seed]
+	generated = [...seed]
 	model.resetStates()
 
 	for (let i = 0; i < maxlen; i++) {
 		let [p_pred, d_pred] = model.predict(tf.unstack(input_eval, -1))
-		p_id = p_pred.argMax(-1).arraySync()[0][0]
-		d_id = d_pred.argMax(-1).arraySync()[0][0]
+		d_id = tf.multinomial(tf.squeeze(d_pred, 0), 1).arraySync().pop()[0]
+		p_id = tf.multinomial(tf.squeeze(p_pred, 0), 1).arraySync().pop()[0]
 		input_eval = tf.expandDims([[p_id, d_id]], 0)
 		if (p_id != 0 && d_id != 0) {
 			generated.push([p_id, d_id])
