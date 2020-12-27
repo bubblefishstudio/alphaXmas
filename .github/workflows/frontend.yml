@@ -18,6 +18,9 @@ jobs:
       - name: Copy docs/ folder 🔧
         run : cp -r ./docs ./deploy/
 
+      - name: Copy src/ folder 🔧
+        run: cp -r ./src/* ./deploy/
+
 #      - name: Setup custom domain 🔧
 #        run: echo domain.tld > ./deploy/CNAME
 
