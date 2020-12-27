@@ -1,121 +1,121 @@
-let sentence, angles, len, epoch, melody;
+let sentence, angles, len, epoch, melody
 
-let rules = new Map(); // defined externally
+let rules = new Map() // defined externally
 
 fetch("./tree_rules.tsv").then(resp => resp.text()).then(body => {
 	body.split("\n").slice(1).forEach(row => {
 		if (row.length > 0) {
-			let [a, b] = row.split("\t");
-			rules.set(a, b);
+			let [a, b] = row.split("\t")
+			rules.set(a, b)
 		}
 	})
-});
+})
 
 // load soundfont
 music21.common.urls.soundfontUrl = "https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/"
 
 let commands = new Map([
 	["F", () => {
-		line(0,0,0, 0,0,len);
-		translate(0,0,len);
+		line(0,0,0, 0,0,len)
+		translate(0,0,len)
 	}],
 	["f", () => {
-		translate(0,0,len);
+		translate(0,0,len)
 	}],
 	["+", () => {
-		rotateY(-angles);
+		rotateY(-angles)
 	}],
 	["-", () => {
-		rotateY(angles);
+		rotateY(angles)
 	}],
 	["ˆ", () => {
-		rotateX(angles);
+		rotateX(angles)
 	}],
 	["&", () => {
-		rotateX(-angles);
+		rotateX(-angles)
 	}],
 	["\\", () => {
-		rotateZ(angles);
+		rotateZ(angles)
 	}],
 	["/", () => {
-		rotateZ(-angles);
+		rotateZ(-angles)
 	}],
 	["|", () => {
-		rotateY(PI);
+		rotateY(PI)
 	}],
 	["[", () => {
-		push();
+		push()
 	}],
 	["]", () => {
-		pop();
+		pop()
 	}],
 	["!", () => {
-		len *= 0.9;
+		len *= 0.9
 	}],
 	["?", () => {
-		len /= 0.9;
+		len /= 0.9
 	}],
 	["'", () => {
 		// nothing for now
 		// change color
 	}],
-]);
+])
 
 function generate(sentence) {
-	let nextsentence = "";
+	let nextsentence = ""
 	for (let i = 0; i < sentence.length; i++) {
-		let current = sentence.charAt(i);
-		let replacement = rules.get(current) || current;
-		nextsentence += replacement;
+		let current = sentence.charAt(i)
+		let replacement = rules.get(current) || current
+		nextsentence += replacement
 	}
-	return nextsentence;
+	return nextsentence
 }
 
 // p5.js functions
 
 function setup() {
-	const axiom="FTZFFF";
-	angles = radians(15);
-	sentence = axiom;
-	epoch = 0;
+	const axiom="FTZFFF"
+	angles = radians(15)
+	sentence = axiom
+	epoch = 0
 
-	loadMelody().then(m => { melody = m; melody.playStream(); loop(); });
+	//loadMelody().then(m => { melody = m; melody.playStream(); loop(); })
 
-	createCanvas(window.innerWidth, window.innerHeight, WEBGL);
-	background(51);
-	frameRate(1);
+	createCanvas(window.innerWidth, window.innerHeight, WEBGL)
+	background(51)
+	frameRate(1)
 
-	noLoop(); // start afterwards
+	//noLoop(); // start afterwards
 }
 
-function mousePressed() {
+/*function mousePressed() {
 	if (melody !== undefined)
 		melody.playStream()
-}
+}*/
 
 function draw() {
 	console.log("draw")
 	if (epoch > 20) {
-		console.log("Epoch limit reched");
-		noLoop();
-		return;
+		console.log("Epoch limit reched")
+		noLoop()
+		return
 	} // stop after 10 iterations
 
-	epoch++;
-	sentence = generate(sentence);
-	len = height/40 + epoch * 0.5;
+	epoch++
+	sentence = generate(sentence)
+	len = height/40 + epoch * 0.5
 
-	background(51);
-	stroke(255, 200);
+	background(51)
+	stroke(255, 200)
 
 	// set origin and axes rotation
-	translate(0, height / 2);
-	rotateX(PI/2);
+	translate(0, height / 2)
+	rotateX(PI/2)
 
 	for (let i = 0; i < sentence.length; i++) {
-		let current = sentence.charAt(i);
+		let current = sentence.charAt(i)
 		if (commands.get(current) !== undefined)
-			commands.get(current)();
+			commands.get(current)()
 	}
 }
 
@@ -158,7 +158,7 @@ function generateMelodyVector(model, seed, maxlen = 80) {
 }
 
 function vec2midi(vec) {
-	const Fraction = (a,b) => a/b;
+	const Fraction = (a,b) => a/b
 	// HARDCODED FROM TRAINED MODEL (check Colab) ---
 	const pitch_vocab = [null,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,81,83]
 	const dur_vocab = [Fraction(1,12),Fraction(1,6),0.25,Fraction(1,3),0.5,Fraction(2,3),0.75,1.0,Fraction(13,12),1.25,Fraction(4,3),1.5,Fraction(5,3),1.75,2.0,2.25,Fraction(7,3),2.5,2.75,3.0,3.25,3.5,3.75,4.0,4.25,4.5,6.0,7.0,8.0]
