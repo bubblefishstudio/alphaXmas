@@ -6,7 +6,7 @@ We build this project as we have interest in L-system and Deep Learning. They ar
 The Slides for [Hackathon Pitch]()/ [Demo Presentation]() can be found here.
 
 ## Demo Video
-[pic](link)
+[![demo video thumbnail](/docs/pic/display.png)](https://youtu.be/zo2jU0MRttI)
 
 ## Project Abstract
 Our goal is to develop AlphaXmas, a generator of short monophonic christmas carol compositions based on a LSTM-RNN Model, since Recurrent Neural Networks have been researched to be effective for hand-writing recognition, speech recognition and music generation. We train the model from the dataset [The Hymns and Carols of Christmas](https://www.hymnsandcarolsofchristmas.com) of around 1k historical compositions in MusicXML/ABC Notation. We also analyze which is the most suitable representation of the input and output data of the network. Finally we generate several short music pieces using the trained model and convert them to audio for playback, and evaluate some aspects of the resulting works to observe if we obtained something interesting and meaningful.
@@ -15,6 +15,7 @@ After we get some music generation results from this model, we use processing.js
 
 ## Melody Generation
 Accroding to the collected dataset, we did melodic analysis using Music21. Then we appled LSTM-RNN model to generate a sequence of melody(pitch, duration) as output.
+![model](/docs/pic/model.png)
 
 
 ## Tree Generation
