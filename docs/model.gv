@@ -1,0 +1,19 @@
+digraph {
+	node [shape=record];
+	ip [label="{input_pitch|{InputLayer| (None, None)}}"];
+	id [label="{input_duration|{InputLayer|(None, None)}}"];
+
+	op [label="{output_pitch|{Dense|(None, None, 35)}}"];
+	od [label="{output_duration|{Dense|(None, None, 30)}}"];
+
+	e1 [label="Embedding|(None, None, 512)"];
+	e2 [label="Embedding|(None, None, 512)"];
+
+	conc [label="Concatenate|(None, None, 1024)"];
+	lstm [label="LSTM|(None, None, 1024)"];
+
+	ip -> e1;
+	id -> e2;
+	{e1, e2} -> conc;
+	conc -> lstm -> {op, od};
+}
