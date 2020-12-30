@@ -13,6 +13,10 @@ Our goal is to develop AlphaXmas, a generator of short monophonic christmas caro
 
 After we get some music generation results from this model, we use processing.js and L-system to generate a 3d Christmas Tree Graphical Model on the webpage. Ideally, the audience can both listen to the newly-generated christmas melody composition and watch the tree model.
 
+## Creative Project Design
+"Art as part of the technological revolution."
+We want to not only showing a technical solution of a problem but also a beautiful experience to the final user. And this creative project follows the according steps: Concepting -> Design -> Prototyping(Hackathon Day) -> Production: Final Release.
+
 ## Melody Generation
 Accroding to the collected dataset, we did melodic analysis using Music21. Then we appled LSTM-RNN model to generate a sequence of melody(pitch, duration) as output.
 ![model](/docs/pic/model.png)
