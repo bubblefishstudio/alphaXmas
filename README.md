@@ -3,7 +3,7 @@ This is a Hackathon project for 2020-2021 Creative Programming and Computing Cou
 
 We build this project as we have interest in L-system and Deep Learning. They are really interesting! As the course 'Creative Programming and Computing' provide the Hackathon day on Dec.18th 2020. We decided to apply the knowledge into practice in this project.
 
-The Slides for [Hackathon Pitch]()/ [Demo Presentation]() can be found here.
+The Slides for [Hackathon Pitch](/docs/pitch.html)/ [Demo Presentation](/docs/demo.html) can be found here.
 
 ## Demo Video
 [![demo video thumbnail](/docs/pic/display.png)](https://youtu.be/zo2jU0MRttI)
