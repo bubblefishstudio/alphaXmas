@@ -5,8 +5,12 @@ We build this project as we have interest in L-system and Deep Learning. They ar
 
 The Slides for [Hackathon Pitch](/docs/pitch.html)/ [Demo Presentation](/docs/demo.html) can be found here.
 
+The final presentation for this project is on Sep.8th 2021. We have updated the the visualization of the Christmas Tree, showing a better modelling and development of this 3D Tree.
+
 ## Demo Video
 [![demo video thumbnail](/docs/pic/display.png)](https://youtu.be/zo2jU0MRttI)
+
+The latest video will be available soon.
 
 ## Project Abstract
 Our goal is to develop AlphaXmas, a generator of short monophonic christmas carol compositions based on a LSTM-RNN Model, since Recurrent Neural Networks have been researched to be effective for hand-writing recognition, speech recognition and music generation. We train the model from the dataset [The Hymns and Carols of Christmas](https://www.hymnsandcarolsofchristmas.com) of around 1k historical compositions in MusicXML/ABC Notation. We also analyze which is the most suitable representation of the input and output data of the network. Finally we generate several short music pieces using the trained model and convert them to audio for playback, and evaluate some aspects of the resulting works to observe if we obtained something interesting and meaningful.
@@ -24,6 +28,10 @@ Accroding to the collected dataset, we did melodic analysis using Music21. Then 
 
 ## Tree Generation
 Picea abies is more commonly acknowledged and seen as a Christmas tree. They look beautifully like Towers. In order to model the shape, we are applying L-system in Processing to generate them. The algorithmic model for the growth of plants or other fractal-like organic forms, is using a rewriting mechanism to update simple stucture into more complex version by each iteration.
+- L-system
+- Cylindrical Model
+- Turtle Geometry
+
 
 ## Future Developments
 The following are the aspects we would like to improve in the future:
@@ -38,3 +46,4 @@ The following are the aspects we would like to improve in the future:
 ## Bibliography
 1. Massimiliano Z, Creative Programming and Computing, Course material of MSc in Music and Acoustic Engineering
 2. Przemyslaw P, The Algorithmic Beauty of Plants(2004), Springer-Verlag
+3. James Scott Hannan, Regina, Saskatchewan, Parametric L-systems and Their Application to The Modelling and Visualization of Plants(1992)
