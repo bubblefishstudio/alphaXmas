@@ -1,3 +1,5 @@
+import { future } from "../utils.js";
+
 export class Grammar {
 	constructor(axiom, rules) {
 		this._state = axiom;
@@ -17,7 +19,7 @@ export class Grammar {
 		});
 	}
 
-	generate() {
+	async generate() {
 		let next_state = [];
 		for (let [op, arg] of this._state) {
 			if (this._rules.has(op)) {
@@ -30,22 +32,23 @@ export class Grammar {
 		this._state = next_state;
 	}
 
-	epoch(e) {
+	async epoch(e) {
 		for (let i = 0; i < e; i++) {
-			this.generate();
+			await this.generate();
 		}
 		return this;
 	}
 }
 
 export class Tree {
-	constructor(cvs) {
+	constructor(cvs, cmds) {
 		this._cvs = cvs;
+		this._cmds = cmds;
 		this._vertices = [];
 		this._points = [];
 	}
 
-	compile(sentence, cmds) {
+	async compile(sentence) {
 		let state = {
 			len: this._cvs.height / 20,
 			angle: 15,
@@ -56,16 +59,20 @@ export class Tree {
 		};
 
 		for (let [op, arg] of sentence) {
-			let action = cmds.get(op);
+			let action = this._cmds.get(op);
 			if (action instanceof Function) {
-				action(state, arg);
+				// wrap in a promise to give a change to the main loop to draw frames
+				await future(_ => action(state, arg));
 			}
 		}
 
+		let new_vertices = [];
+
 		for (let v of state.vtx) {
-			this._vertices.push(this._cvs.vertex.bind(this._cvs, v.x, v.y, v.z));
+			new_vertices.push(this._cvs.vertex.bind(this._cvs, v.x, v.y, v.z));
 		}
 
+		this._vertices = new_vertices;
 		this._points = state.vtx;
 
 		return this;
