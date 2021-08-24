@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A Christmas Carol Melody generator based on RNN",
   "scripts": {
-    "test": "http-server"
+    "serve": "http-server ./src/"
   },
   "repository": {
     "type": "git",
