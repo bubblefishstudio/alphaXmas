@@ -4,7 +4,7 @@ import { sleep } from "../utils.js";
 
 export const sketch = (p) => {
 
-	let tree, g, epochs = 20;
+	let tree, g, epochs = 18;
 
 	async function let_it_grow() {
 		while (epochs-- > 0) {
@@ -31,8 +31,8 @@ export const sketch = (p) => {
 		p.background(60);
 		p.stroke(255);
 
-		p.rotateY(p.frameCount * 0.02);
-		p.rotateX(p.sin(p.frameCount/50) * p.radians(5));
+		p.camera(-(p.mouseX-p.width/2), -p.height/8 - (p.mouseY-p.height/2), p.height, 0, 0, 0, 0, 1, 0);
+		p.rotateY(p.frameCount * 3e-3);
 
 		tree.draw();
 	};
