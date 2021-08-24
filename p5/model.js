@@ -8,11 +8,24 @@ export class Grammar {
 		return this._state;
 	}
 
+	static parse(sentence) {
+		// convert human friendly to machine suitable representation
+		return sentence.split(" ").map(c => {
+			let op = c[0];
+			let arg = parseInt(c.slice(1)) || undefined;
+			return [op, arg];
+		});
+	}
+
 	generate() {
-		let next_state = "";
-		for (let c of this._state) {
-			let rewriting = this._rules.get(c) || c;
-			next_state += rewriting;
+		let next_state = [];
+		for (let [op, arg] of this._state) {
+			if (this._rules.has(op)) {
+				let rewriting = this._rules.get(op)(arg);
+				next_state = next_state.concat(rewriting);
+			} else {
+				next_state.push([op, arg])
+			}
 		}
 		this._state = next_state;
 	}
@@ -42,10 +55,10 @@ export class Tree {
 			glue: -1,
 		};
 
-		for (let c of sentence) {
-			let action = cmds.get(c);
+		for (let [op, arg] of sentence) {
+			let action = cmds.get(op);
 			if (action instanceof Function) {
-				action(state);
+				action(state, arg);
 			}
 		}
 
