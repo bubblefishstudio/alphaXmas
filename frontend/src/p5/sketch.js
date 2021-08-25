@@ -21,6 +21,10 @@ export const sketch = (p) => {
 		g = new m.Grammar(cst.grammar_axiom, cst.grammar_rules);
 		tree = new m.Tree(p, cst.commands);
 
+		// debug
+		window.g = g;
+		window.tree = tree;
+
 		// continue growing
 		let_it_grow();
 
