@@ -46,7 +46,6 @@ export class Tree {
 		this._cmds = cmds;
 		this._vertices = [];
 		this._leaf_vertices = [];
-		this._points = [];
 	}
 
 	async compile(sentence) {
@@ -70,9 +69,6 @@ export class Tree {
 
 		this._vertices = state.vtx;
 		this._leaf_vertices = state.leaf_vtx;
-
-		// debugging
-		this._points = [state.vtx, state.leaf_vtx];
 
 		return this;
 	}
