@@ -32,8 +32,7 @@ export const sketch = (p) => {
 	};
 
 	p.draw = function() {
-		p.background(60);
-		p.stroke(255);
+		p.background(70);
 
 		p.camera(-(p.mouseX-p.width/2), -p.height/8 - (p.mouseY-p.height/2), p.height, 0, 0, 0, 0, 1, 0);
 		p.rotateY(p.frameCount * 3e-3);

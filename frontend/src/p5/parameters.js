@@ -12,6 +12,12 @@ export const commands = new Map([
 			s.glue = s.vtx.length-1;
 		}
 	}],
+	["L", (s, n=1) => {
+		s.leaf_vtx.push(s.turtle.position);
+		s.turtle.move(s.len*n);
+		s.leaf_vtx.push(s.turtle.position);
+		s.turtle.move(-s.len*n);  // restore previous position
+	}],
 	["f", (s, n=1) => {
 		s.glue = -1;
 		s.turtle.move(s.len*n);
@@ -57,11 +63,12 @@ export const commands = new Map([
 	}],
 ]);
 
-export const grammar_axiom = Grammar.parse("F3 T");
+export const grammar_axiom = Grammar.parse("F4 T");
 
 export const grammar_rules = new Map([
-	["T",  (_) => Grammar.parse("/15 ! F2 B B B B B B T")],
-	["B",  (_) => Grammar.parse("/60 [ | ^45 F Y ]")],
+	["T",  (_) => Grammar.parse("/15 ! F B B B B B B T")],
+	["B",  (_) => Grammar.parse("/60 [ | ^45 F2 Y ]")],
 	["Y",  (_) => Grammar.parse("Z ! Y ?")],
-	["Z",  (_) => Grammar.parse("^5 [ /15 -30 F3 ] [ \\15 +30 F3 ] [ &30 F3 ] F")],
+	["Z",  (_) => [["^", parseInt(Math.random()*10)]].concat(Grammar.parse("E E E E E E E E F0.1"))],
+	["E",  (_) => Grammar.parse("/45 [ &70 L0.5 ] F0.05")],
 ]);
