@@ -14,7 +14,7 @@ export class Grammar {
 		// convert human friendly to machine suitable representation
 		return sentence.split(" ").map(c => {
 			let op = c[0];
-			let arg = parseInt(c.slice(1)) || undefined;
+			let arg = parseFloat(c.slice(1)) || undefined;
 			return [op, arg];
 		});
 	}
