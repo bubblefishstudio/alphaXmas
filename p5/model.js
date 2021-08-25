@@ -45,6 +45,7 @@ export class Tree {
 		this._cvs = cvs;
 		this._cmds = cmds;
 		this._vertices = [];
+		this._leaf_vertices = [];
 		this._points = [];
 	}
 
@@ -53,6 +54,7 @@ export class Tree {
 			len: this._cvs.height / 20,
 			angle: 15,
 			vtx: [],
+			leaf_vtx: [],
 			stack: [],
 			turtle: new Turtle(),
 			glue: -1,
@@ -66,14 +68,11 @@ export class Tree {
 			}
 		}
 
-		let new_vertices = [];
+		this._vertices = state.vtx;
+		this._leaf_vertices = state.leaf_vtx;
 
-		for (let v of state.vtx) {
-			new_vertices.push(this._cvs.vertex.bind(this._cvs, v.x, v.y, v.z));
-		}
-
-		this._vertices = new_vertices;
-		this._points = state.vtx;
+		// debugging
+		this._points = [state.vtx, state.leaf_vtx];
 
 		return this;
 	}
@@ -85,10 +84,20 @@ export class Tree {
 		p.translate(0, p.height / 2);
 		p.rotateX(p.PI/2);
 
-		// draw tree
+		// draw tree branches
 		p.noFill();
+		p.stroke(150, 100, 0);
+		p.strokeWeight(3);
 		p.beginShape(p.LINES);
-		this._vertices.forEach(v => v());
+		this._vertices.forEach(v => p.vertex(v.x, v.y, v.z));
+		p.endShape();
+
+		// draw tree leaves
+		p.noFill();
+		p.stroke(50, 200, 100);
+		p.strokeWeight(0.5);
+		p.beginShape(p.LINES);
+		this._leaf_vertices.forEach(v => p.vertex(v.x, v.y, v.z));
 		p.endShape();
 
 		// draw vertices
