@@ -25,10 +25,10 @@ export class Grammar {
 		let next_state = [];
 		for (let [op, arg] of this._state) {
 			if (this._rules.has(op)) {
-				let rewriting = this._rules.get(op)(arg);
+				let rewriting = await future(_ => this._rules.get(op)(arg));
 				next_state = next_state.concat(rewriting);
 			} else {
-				next_state.push([op, arg])
+				await future(_ => next_state.push([op, arg]));
 			}
 		}
 		this._state = next_state;
@@ -69,8 +69,9 @@ export class Tree {
 			}
 		}
 
-		this._vertices = state.vtx;
-		this._leaf_vertices = state.leaf_vtx;
+		const vec2vtx = v => this._cvs.vertex.bind(this._cvs, v.x, v.y, v.z);
+		this._vertices = state.vtx.map(vec2vtx);
+		this._leaf_vertices = state.leaf_vtx.map(vec2vtx);
 
 		return this;
 	}
@@ -87,7 +88,7 @@ export class Tree {
 		p.stroke(150, 100, 0);
 		p.strokeWeight(3);
 		p.beginShape(p.LINES);
-		this._vertices.forEach(v => p.vertex(v.x, v.y, v.z));
+		this._vertices.forEach(v => v());
 		p.endShape();
 
 		// draw tree leaves
@@ -95,7 +96,7 @@ export class Tree {
 		p.stroke(50, 200, 100);
 		p.strokeWeight(0.5);
 		p.beginShape(p.LINES);
-		this._leaf_vertices.forEach(v => p.vertex(v.x, v.y, v.z));
+		this._leaf_vertices.forEach(v => v());
 		p.endShape();
 
 		// draw vertices
