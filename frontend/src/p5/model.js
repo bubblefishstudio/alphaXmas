@@ -133,19 +133,21 @@ class Turtle {
 		return this._rotation.apply(g);
 	}
 
-	pitch(p) {
-		let q = Quaternion.from_euclidean(this.side, p);
+	_rotate_around(axis, angle) {
+		let q = Quaternion.from_euclidean(axis, angle);
 		this._rotation = q.mult(this._rotation);
+	}
+
+	pitch(p) {
+		this._rotate_around(this.side, p);
 	}
 
 	yaw(y) {
-		let q = Quaternion.from_euclidean(this.ground, y);
-		this._rotation = q.mult(this._rotation);
+		this._rotate_around(this.ground, y);
 	}
 
 	roll(r) {
-		let q = Quaternion.from_euclidean(this.head, r);
-		this._rotation = q.mult(this._rotation);
+		this._rotate_around(this.head, r);
 	}
 
 	flip() {
@@ -172,6 +174,7 @@ class Quaternion { // used to apply rotations on vectors
 		} else {
 			this._pure = pure;
 		}
+		this._normalize();
 	}
 
 	static from_euclidean(axis, angle) {
@@ -187,6 +190,12 @@ class Quaternion { // used to apply rotations on vectors
 
 	get pure() {
 		return this._pure.copy();
+	}
+
+	_normalize() {
+		let norm = Math.sqrt(Math.pow(this._real,2) + this._pure.magSq());
+		this._real /= norm;
+		this._pure.div(norm);
 	}
 
 	copy() {
