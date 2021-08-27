@@ -1,3 +1,5 @@
+import p5 from "p5";
+
 import { future } from "../utils.js";
 
 export class Grammar {

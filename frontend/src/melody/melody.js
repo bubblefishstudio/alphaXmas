@@ -1,7 +1,13 @@
+import * as m21 from "music21j";
+import * as tf from "@tensorflow/tfjs";
+
 import seeds from "./seeds.js";
 
+// load soundfont (patch)
+m21.common.urls.soundfontUrl = "https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/";
+
 export async function loadMelody() {
-	const model = await tf.loadLayersModel('./melody/keras_model/model.json')
+	const model = await tf.loadLayersModel('./keras_model/model.json')
 	// HARDCODED FROM TRAINED MODEL (check Colab) ---
 	const pitch_vocab_size = 34
 	const duration_vocab_size = 29
@@ -41,7 +47,6 @@ function vec2midi(vec) {
 	const pitch_vocab = [null,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,81,83]
 	const dur_vocab = [Fraction(1,12),Fraction(1,6),0.25,Fraction(1,3),0.5,Fraction(2,3),0.75,1.0,Fraction(13,12),1.25,Fraction(4,3),1.5,Fraction(5,3),1.75,2.0,2.25,Fraction(7,3),2.5,2.75,3.0,3.25,3.5,3.75,4.0,4.25,4.5,6.0,7.0,8.0]
 	// ----------------------------------------------
-	const m21 = music21
 	let stream = new m21.stream.Stream()
 	for (let [i,j] of vec) {
 		let pitch = pitch_vocab[i-1]

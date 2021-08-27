@@ -1,8 +1,11 @@
+import p5 from "p5";
+
 import * as cst from "./parameters.js";
 import * as m from "./model.js";
 import { sleep } from "../utils.js";
 
-export const sketch = (p) => {
+
+const sketch = (p) => {
 
 	let tree, g, epochs = 15;
 
@@ -41,3 +44,7 @@ export const sketch = (p) => {
 	};
 
 };
+
+export function init_sketch() {
+	return new p5(sketch);
+}

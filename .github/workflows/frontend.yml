@@ -12,20 +12,17 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
 
-      - name: Make deploy dir 🔧
-        run: mkdir ./deploy
+      - name: Install and Build 🔧
+        run: |
+          cd ./frontend/
+          npm install
+          npm run build:prod
 
       - name: Copy docs/ folder 🔧
-        run : cp -r ./docs ./deploy/
-
-      - name: Copy src/ folder 🔧
-        run: cp -r ./frontend/src/* ./deploy/
-
-#      - name: Setup custom domain 🔧
-#        run: echo domain.tld > ./deploy/CNAME
+        run : cp -r ./docs ./frontend/dist/
 
       - name: Deploy 🚀
         uses: peaceiris/actions-gh-pages@v3.6.1
         with:
-          publish_dir: ./deploy
+          publish_dir: ./frontend/dist/
           github_token: ${{ secrets.GITHUB_TOKEN }}
