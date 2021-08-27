@@ -4,7 +4,7 @@ import { sleep } from "../utils.js";
 
 export const sketch = (p) => {
 
-	let tree, g, epochs = 18;
+	let tree, g, epochs = 15;
 
 	async function let_it_grow() {
 		while (epochs-- > 0) {
