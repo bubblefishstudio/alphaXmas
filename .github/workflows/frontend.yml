@@ -31,7 +31,10 @@ jobs:
         working-directory: ./frontend
 
       - name: Copy docs/ folder 🔧
-        run : cp -r ./docs ./frontend/dist/
+        run: cp -r ./docs ./frontend/dist/
+
+      - name: Setup custom domain 🔧
+        run: echo alphaxmas.bubblefish.studio > ./frontend/dist/CNAME
 
       - name: Deploy 🚀
         uses: peaceiris/actions-gh-pages@v3.6.1
