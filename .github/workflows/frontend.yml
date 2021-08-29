@@ -17,14 +17,15 @@ jobs:
         with:
           node-version: "12.x"
           cache: "npm"
+        working-directory: ./frontend
 
       - name: Install dependencies and Build 🔧
         run: |
           node -v
           npm -v
-          cd ./frontend/
           npm ci
           npm run build:prod
+        working-directory: ./frontend
 
       - name: Copy docs/ folder 🔧
         run : cp -r ./docs ./frontend/dist/
