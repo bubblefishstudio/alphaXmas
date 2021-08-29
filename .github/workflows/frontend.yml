@@ -19,6 +19,9 @@ jobs:
           cache: "npm"
           cache-dependency-path: ./frontend/package-lock.json
 
+      - name: Setup npm
+        run: npm i -g npm@7
+
       - name: Install dependencies and Build 🔧
         run: |
           node -v
