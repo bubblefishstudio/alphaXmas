@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: "12.x"
           cache: "npm"
-        working-directory: ./frontend
+          cache-depencency-path: ./frontend/package-lock.json
 
       - name: Install dependencies and Build 🔧
         run: |
