@@ -19,6 +19,8 @@ jobs:
 
       - name: Install dependencies and Build 🔧
         run: |
+          node -v
+          npm -v
           cd ./frontend/
           npm install
           npm run build:prod
