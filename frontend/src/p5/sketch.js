@@ -18,7 +18,7 @@ const sketch = (p) => {
 	}
 
 	p.setup = function() {
-		p.createCanvas(window.innerWidth, window.innerHeight, p.WEBGL);
+		p.createCanvas(visualViewport?.width ?? window.innerWidth, visualViewport?.height ?? window.innerHeight, p.WEBGL);
 
 		// load model
 		g = new m.Grammar(cst.grammar_axiom, cst.grammar_rules);

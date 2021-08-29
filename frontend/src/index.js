@@ -7,3 +7,6 @@ function main() {
 }
 
 window.addEventListener("DOMContentLoaded", main, false);
+
+// prevent scroll on mobile
+window.addEventListener("scroll", (e) => e.preventDefault(), false);
