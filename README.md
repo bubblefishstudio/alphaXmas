@@ -1,5 +1,5 @@
 # alphaXmas
-This is a Hackathon project for 2020-2021 Creative Programming and Computing Course. The main purpose of this project is discover how to do **Music Melody Generation** using RNN modelling, together with the a graphical simulation of Christmas Tree Generation using L-system.
+This is a Hackathon project for 2020-2021 Creative Programming and Computing Course. The main purpose of this project is to discover how to do **Music Melody Generation** using RNN modelling, together with the a graphical simulation of Christmas Tree Generation using L-system.
 
 We build this project as we have interest in L-system and Deep Learning. They are really interesting! As the course 'Creative Programming and Computing' provide the Hackathon day on Dec.18th 2020. We decided to apply the knowledge into practice in this project.
 
@@ -28,9 +28,20 @@ Accroding to the collected dataset, we did melodic analysis using Music21. Then 
 
 ## Tree Generation
 Picea abies is more commonly acknowledged and seen as a Christmas tree. They look beautifully like Towers. In order to model the shape, we are applying L-system in Processing to generate them. The algorithmic model for the growth of plants or other fractal-like organic forms, is using a rewriting mechanism to update simple stucture into more complex version by each iteration.
+
 - L-system
+Rewriting mechanism in L-system defines a complex object like natural plants by successively replacing part of a simple initial object with a set of rewriting rules/production rules.
+
+In the graphical view, the audience can see the growing of a Picea abies tree growing from the initial stage to its most complex stage.
+
 - Cylindrical Model
+Spiral patterns are common in natural plants which can be described by models with positioning the components along a nelix on the surface of a cylindar.
+
+In our case, there are two parts of our model uses the spiral patterns: the position of the branches growing out of the tree trunk, and, seconderly, the position of the leaves on all the branches.
+
 - Turtle Geometry
+
+In order to paint on the processing canvas effienciently,.....
 
 
 ## Future Developments
