@@ -1,12 +1,26 @@
+window.m21config = { loadSoundfont: false };
+
 import * as m21 from "music21j";
 import * as tf from "@tensorflow/tfjs";
 
 import seeds from "./seeds.js";
 
 // load soundfont (patch)
-m21.common.urls.soundfontUrl = "https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/";
+m21.common.urls.soundfontUrl = "https://gleitz.github.io/midi-js-soundfonts/MusyngKite/";
 
-export async function loadMelody() {
+export async function init_melody() {
+	let m = await loadMelody()
+	console.log("melody loaded, playing")
+	await new Promise(resolve =>
+		m21.miditools.loadSoundfont("music_box", i => {
+			m.instrument = i
+			resolve()
+		})
+	)
+	m.playStream()
+}
+
+async function loadMelody() {
 	const model = await tf.loadLayersModel('./keras_model/model.json')
 	// HARDCODED FROM TRAINED MODEL (check Colab) ---
 	const pitch_vocab_size = 34

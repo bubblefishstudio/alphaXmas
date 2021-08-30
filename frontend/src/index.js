@@ -1,9 +1,9 @@
 import { init_sketch } from "./p5/sketch.js";
-import { loadMelody } from "./melody/melody.js";
+import { init_melody } from "./melody/melody.js";
 
 function main() {
 	window.s = init_sketch();
-	loadMelody().then(m => { console.log("melody loaded, playing"); m.playStream(); });
+	init_melody();
 }
 
 window.addEventListener("DOMContentLoaded", main, false);
