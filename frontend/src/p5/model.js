@@ -26,7 +26,7 @@ export class Grammar {
 		for (let [op, arg] of this._state) {
 			if (this._rules.has(op)) {
 				let rewriting = await future(_ => this._rules.get(op)(arg));
-				next_state = next_state.concat(rewriting);
+				next_state = await future(_ => next_state.concat(rewriting));
 			} else {
 				await future(_ => next_state.push([op, arg]));
 			}
@@ -48,6 +48,8 @@ export class Tree {
 		this._cmds = cmds;
 		this._vertices = [];
 		this._leaf_vertices = [];
+		this._branch_geom = null;
+		this._leaf_geom = null;
 	}
 
 	async compile(sentence) {
