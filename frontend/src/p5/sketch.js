@@ -11,8 +11,8 @@ const sketch = (p) => {
 
 	async function let_it_grow() {
 		while (epochs-- > 0) {
-			await g.generate();
-			await tree.compile(g.state);
+			g.generate();
+			tree.compile(g.state);
 			await sleep(1000);
 		}
 	}

@@ -1,7 +1,6 @@
 import p5 from "p5";
 import "./patches.js";
 
-import { future } from "../utils.js";
 
 export class Grammar {
 	constructor(axiom, rules) {
@@ -22,22 +21,22 @@ export class Grammar {
 		});
 	}
 
-	async generate() {
+	generate() {
 		let next_state = [];
 		for (let [op, arg] of this._state) {
 			if (this._rules.has(op)) {
-				let rewriting = await future(_ => this._rules.get(op)(arg));
-				next_state = await future(_ => next_state.concat(rewriting));
+				let rewriting = this._rules.get(op)(arg);
+				next_state.push(...rewriting);
 			} else {
-				await future(_ => next_state.push([op, arg]));
+				next_state.push([op, arg]);
 			}
 		}
 		this._state = next_state;
 	}
 
-	async epoch(e) {
+	epoch(e) {
 		for (let i = 0; i < e; i++) {
-			await this.generate();
+			this.generate();
 		}
 		return this;
 	}
@@ -51,7 +50,7 @@ export class Tree {
 		this._leaf_geom = new p5.Geometry();
 	}
 
-	async compile(sentence) {
+	compile(sentence) {
 		let state = {
 			len: this._cvs.height / 20,
 			angle: 15,
@@ -66,8 +65,7 @@ export class Tree {
 		for (let [op, arg] of sentence) {
 			let action = this._cmds.get(op);
 			if (action instanceof Function) {
-				// wrap in a promise to give a change to the main loop to draw frames
-				await future(_ => action(state, arg));
+				action(state, arg);
 			}
 		}
 
