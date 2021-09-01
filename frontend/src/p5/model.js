@@ -1,4 +1,5 @@
 import p5 from "p5";
+import "./patches.js";
 
 import { future } from "../utils.js";
 
@@ -46,10 +47,8 @@ export class Tree {
 	constructor(cvs, cmds) {
 		this._cvs = cvs;
 		this._cmds = cmds;
-		this._vertices = [];
-		this._leaf_vertices = [];
-		this._branch_geom = null;
-		this._leaf_geom = null;
+		this._branch_geom = new p5.Geometry();
+		this._leaf_geom = new p5.Geometry();
 	}
 
 	async compile(sentence) {
@@ -63,6 +62,7 @@ export class Tree {
 			glue: -1,
 		};
 
+		// compute vertices from turtle movements
 		for (let [op, arg] of sentence) {
 			let action = this._cmds.get(op);
 			if (action instanceof Function) {
@@ -71,44 +71,38 @@ export class Tree {
 			}
 		}
 
-		const vec2vtx = v => this._cvs.vertex.bind(this._cvs, v.x, v.y, v.z);
-		this._vertices = state.vtx.map(vec2vtx);
-		this._leaf_vertices = state.leaf_vtx.map(vec2vtx);
+		// prepare geometries (see patches.js)
+		const p = this._cvs;
+
+		// tree branches
+		p.beginShape(p.LINES);
+		p.noFill();
+		state.vtx.forEach(v => p.vertex(v.x, v.y, v.z));
+		this._branch_geom = p.saveShape();
+
+		// tree leafs
+		p.beginShape(p.LINES);
+		p.noFill();
+		state.leaf_vtx.forEach(v => p.vertex(v.x, v.y, v.z));
+		this._leaf_geom = p.saveShape();
 
 		return this;
 	}
 
 	draw() {
-		let p = this._cvs;
+		const p = this._cvs;
 
 		// setup reference frame
 		p.translate(0, p.height / 2);
 		p.rotateX(p.PI/2);
 
-		// draw tree branches
-		p.noFill();
+		// draw tree
 		p.stroke(150, 100, 0);
 		p.strokeWeight(3);
-		p.beginShape(p.LINES);
-		this._vertices.forEach(v => v());
-		p.endShape();
-
-		// draw tree leaves
-		p.noFill();
+		p.model(this._branch_geom);
 		p.stroke(50, 200, 100);
 		p.strokeWeight(0.5);
-		p.beginShape(p.LINES);
-		this._leaf_vertices.forEach(v => v());
-		p.endShape();
-
-		// draw vertices
-		/*
-		p.stroke(255,0,0);
-		p.beginShape(p.POINTS);
-		this._vertices.forEach(v => v());
-		p.endShape();
-		*/
-
+		p.model(this._leaf_geom);
 	}
 }
 
