@@ -17,7 +17,10 @@ export async function init_melody() {
 			resolve()
 		})
 	)
-	m.playStream()
+	const loopPlay = () => {
+		m.playStream({done: loopPlay, tempo: 90})
+	}
+	loopPlay()
 }
 
 async function loadMelody() {
