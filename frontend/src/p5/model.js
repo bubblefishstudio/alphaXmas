@@ -90,11 +90,8 @@ export class Tree {
 	draw() {
 		const p = this._cvs;
 
-		// setup reference frame
-		p.translate(0, p.height / 2);
-		p.rotateX(p.PI/2);
-
 		// draw tree
+		p.noFill();
 		p.stroke(150, 100, 0);
 		p.strokeWeight(3);
 		p.model(this._branch_geom);

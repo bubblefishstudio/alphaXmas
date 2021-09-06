@@ -7,6 +7,8 @@ import { sleep } from "../utils.js";
 
 const sketch = (p) => {
 
+	//p.disableFriendlyErrors = true;
+
 	let tree, g, epochs = 15;
 
 	async function let_it_grow() {
@@ -37,9 +39,26 @@ const sketch = (p) => {
 	p.draw = function() {
 		p.background(70);
 
-		p.camera(-(p.mouseX-p.width/2), -p.height/8 - (p.mouseY-p.height/2), p.height, 0, 0, 0, 0, 1, 0);
-		p.rotateY(p.frameCount * 3e-3);
+		// camera & rotation
+		p.camera(-(p.mouseX-p.width/2), p.height, p.height + (p.mouseY-p.height/2), 0, 0, p.height/2, 0, 0, -1);
+		p.rotateZ(p.frameCount * 3e-3);
 
+		// ground
+		const size = Math.max(p.width, p.height)*20;
+		p.noStroke();
+		p.fill(60);
+		p.plane(size, size);
+
+		// light
+		//p.directionalLight("#000", 100, 100, 0);
+		let dirX = (p.mouseX / p.width - 0.5) * 2;
+		let dirY = (p.mouseY / p.height - 0.5) * 2;
+		//p.directionalLight(255, 0, 0, -dirX, -dirY, -1);
+		//p.sphere(50)
+
+		p.lights();
+
+		// finally, the tree
 		tree.draw();
 	};
 
