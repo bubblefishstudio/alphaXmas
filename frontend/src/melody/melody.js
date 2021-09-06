@@ -25,11 +25,9 @@ export async function init_melody() {
 
 async function loadMelody() {
 	const model = await tf.loadLayersModel('./keras_model/model.json')
-	// HARDCODED FROM TRAINED MODEL (check Colab) ---
-	const pitch_vocab_size = 34
-	const duration_vocab_size = 29
-	// ----------------------------------------------
-	const seed = seeds[parseInt(Math.random() * seeds.length)]
+	const idx = (parseInt(location.hash.slice(1)) + 1 || parseInt(Math.random() * seeds.length) + 1) - 1
+	location.hash = idx
+	const seed = seeds[idx]
 	const mel_vec = generateMelodyVector(model, seed, 40)
 	console.log(mel_vec)
 	return vec2midi(mel_vec)
