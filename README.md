@@ -5,10 +5,12 @@ This project, AlphaXmas, is a multimedia installation to bring the audience into
 This is a Hackathon project for 2020-2021 Creative Programming and Computing Course. 
 The hackathon date on Dec.18th 2020, while the final presentation is on Sep.8th 2021.
 
-Available slides are here: [demo](bubblefishstudio/alphaXmas/docs/pitch.html)/ [Demo Presentation](bubblefishstudio/alphaXmas/docs/demo.html) can be found here.
+## Project Online
+https://alphaxmas.bubblefish.studio/
 
-## Demo Video
-[![demo video thumbnail](bubblefishstudio/alphaXmas/docs/pic/display.png)](https://youtu.be/zo2jU0MRttI)
+Available slides are here: [demo](/docs/pitch.html)/ [Demo Pre](/docs/demo.html)/[Final Pre](/docs/final.html) can be found here.
+
+Also, a project thesis can he found [here](/docs/thesis.pdf).
 
 ## Creative Project Design
 Creative Programming provides us the chance to design and develop a project to discover something interesting rather than something functional. Our goal is largely inspired by the beauty of computational creativity, we want to explore how to create a live graphical animation and live music in this project.
