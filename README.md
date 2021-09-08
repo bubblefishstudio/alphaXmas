@@ -8,7 +8,7 @@ The hackathon date on Dec.18th 2020, while the final presentation is on Sep.8th 
 ## Project Links
 Project is available here: https://alphaxmas.bubblefish.studio/
 
-Available slides are here: [demo](/docs/Pitch.html)/[Final Pre](/docs/cpc_final.html) can be found here.
+Available slides are here: [demo slides](/docs/Pitch.html)/[final slides](/docs/cpc_final.html) can be found here.
 
 Also, a project thesis can he found [here](/docs/thesis.pdf).
 
