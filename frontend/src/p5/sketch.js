@@ -15,7 +15,7 @@ const sketch = (p) => {
 		while (epochs-- > 0) {
 			g.generate();
 			tree.compile(g.state);
-			await sleep(1000);
+			await sleep(1332);
 		}
 	}
 
