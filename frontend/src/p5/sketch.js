@@ -9,13 +9,13 @@ const sketch = (p) => {
 
 	//p.disableFriendlyErrors = true;
 
-	let tree, g, epochs = 15;
+	let tree, g, epochs = 18;
 
 	async function let_it_grow() {
 		while (epochs-- > 0) {
 			g.generate();
 			tree.compile(g.state);
-			await sleep(1332);
+			await sleep(1000/1.5 * 4);
 		}
 	}
 
@@ -25,6 +25,9 @@ const sketch = (p) => {
 		// load model
 		g = new m.Grammar(cst.grammar_axiom, cst.grammar_rules);
 		tree = new m.Tree(p, cst.commands);
+
+		// bind note play
+		document.addEventListener("notePlayed", () => tree.rotate_lights());
 
 		// debug
 		window.g = g;

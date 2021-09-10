@@ -73,7 +73,7 @@ export const grammar_axiom = Grammar.parse("!2 H T X");
 export const grammar_rules = new Map([
 	["D",  (n=1) => n > 1 ? [["D", n-1]] : [["F", n]]],  // delay stroke
 
-	["H",  (_) => Grammar.parse("F0.5 ! H ?")],
+	["H",  (_) => Grammar.parse("F0.4 ! H ?")],
 	["T",  (_) => Grammar.parse("/n /30 ! D3.2 B B B T", Math.random()*10)],
 	["B",  (_) => Grammar.parse("/n /120 [ | ^n ^50 D2.5 ! Y ? ] Dn", Math.random()*20, Math.random()*10, Math.random()/2+2)],
 
@@ -81,6 +81,6 @@ export const grammar_rules = new Map([
 	["I",  (_) => Grammar.parse("+n X !0.6 I ?0.6", Math.random()*4-2)],
 	["V",  (_) => Grammar.parse("D0.2 [ /20 +50 X ! I I ? ] D0.1 [ \\20 -50 X ! I I ? ] !0.8 Y ?0.8")],
 
-	["X",  (_) => Grammar.parse("^n E E E E E E D0.05 O", Math.random()*4)],
+	["X",  (_) => Grammar.parse("^n E E E E E E D0.05 O", Math.random()*3)],
 	["E",  (_) => Grammar.parse("/60 [ &70 L0.5 ] F0.05")],
 ]);
