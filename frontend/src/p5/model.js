@@ -12,11 +12,15 @@ export class Grammar {
 		return this._state;
 	}
 
-	static parse(sentence) {
+	static parse(sentence, ...values) {
 		// convert human friendly to machine suitable representation
+		let i = 0;
 		return sentence.split(" ").map(c => {
-			let op = c[0];
-			let arg = parseFloat(c.slice(1)) || undefined;
+			let op = c[0], arg;
+			if (c.slice(1) == "n")
+				arg = values[i++];
+			else
+				arg = parseFloat(c.slice(1)) || undefined;
 			return [op, arg];
 		});
 	}
