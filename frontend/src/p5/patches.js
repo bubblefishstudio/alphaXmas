@@ -2,7 +2,9 @@ import p5 from "p5";
 
 // save shape as Geometry from immediate mode
 p5.RendererGL.prototype.saveShape = function() {
-	this._processVertices(...arguments);
+	if (this.immediateMode.shapeMode !== 0x0000) // POINTS
+		this._processVertices(...arguments);
+
 	this.isBezier = false;
 	this.isQuadratic = false;
 	this.isCurve = false;
