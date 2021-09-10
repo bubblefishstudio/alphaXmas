@@ -63,19 +63,19 @@ export const commands = new Map([
 	}],
 ]);
 
-export const grammar_axiom = Grammar.parse("!2 H T Z");
+export const grammar_axiom = Grammar.parse("!2 H T X");
 
 export const grammar_rules = new Map([
 	["D",  (n=1) => n > 1 ? [["D", n-1]] : [["F", n]]],  // delay stroke
 
 	["H",  (_) => Grammar.parse("F0.5 ! H ?")],
 	["T",  (_) => Grammar.parse("/30 ! D3.4 B B B T")],
-	["B",  (_) => Grammar.parse("/120 [ | ^50 D2.5 ! W ? ] D2.2")],
+	["B",  (_) => Grammar.parse("/120 [ | ^50 D2.5 ! Y ? ] D2.2")],
 
-	["Y",  (_) => Grammar.parse("D0.2 [ /20 +50 Z ! I I ? ] D0.1 [ \\20 -50 Z ! I I ? ] !0.8 W ?0.8")],
-	["I",  (_) => Grammar.parse("Z !0.6 I ?0.6")],
-	["W",  (_) => Grammar.parse("Z I ! Y ?")],
+	["Y",  (_) => Grammar.parse("X I ! V ?")],
+	["I",  (_) => Grammar.parse("X !0.6 I ?0.6")],
+	["V",  (_) => Grammar.parse("D0.2 [ /20 +50 X ! I I ? ] D0.1 [ \\20 -50 X ! I I ? ] !0.8 Y ?0.8")],
 
-	["Z",  (_) => [["^", parseInt(Math.random()*4)]].concat(Grammar.parse("E E E E E E D0.05"))],
+	["X",  (_) => [["^", parseInt(Math.random()*4)]].concat(Grammar.parse("E E E E E E D0.05"))],
 	["E",  (_) => Grammar.parse("/60 [ &70 L0.5 ] F0.05")],
 ]);
