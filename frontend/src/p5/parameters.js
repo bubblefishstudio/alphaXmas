@@ -18,6 +18,11 @@ export const commands = new Map([
 		s.leaf_vtx.push(s.turtle.position);
 		s.turtle.move(-s.len*n);  // restore previous position
 	}],
+	["O", (s, n) => {
+		if (Math.random() < 0.3) {
+			s.lights.push(s.turtle.position);
+		}
+	}],
 	["f", (s, n=1) => {
 		s.glue = -1;
 		s.turtle.move(s.len*n);
@@ -76,6 +81,6 @@ export const grammar_rules = new Map([
 	["I",  (_) => Grammar.parse("+n X !0.6 I ?0.6", Math.random()*4-2)],
 	["V",  (_) => Grammar.parse("D0.2 [ /20 +50 X ! I I ? ] D0.1 [ \\20 -50 X ! I I ? ] !0.8 Y ?0.8")],
 
-	["X",  (_) => Grammar.parse("^n E E E E E E D0.05", Math.random()*4)],
+	["X",  (_) => Grammar.parse("^n E E E E E E D0.05 O", Math.random()*4)],
 	["E",  (_) => Grammar.parse("/60 [ &70 L0.5 ] F0.05")],
 ]);
