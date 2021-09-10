@@ -74,9 +74,10 @@ function vec2midi(vec) {
 		else
 			note = new m21.note.Note(pitch, duration)
 		// add hook
+		let oldPlayMidi = note.playMidi;
 		note.playMidi = function() {
 			document.dispatchEvent(notePlayed);
-			m21.note.Note.prototype.playMidi.call(note, ...arguments);
+			oldPlayMidi.call(note, ...arguments);
 		}
 		stream.append(note)
 	}
