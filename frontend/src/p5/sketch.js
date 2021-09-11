@@ -2,6 +2,7 @@ import p5 from "p5";
 
 import * as cst from "./parameters.js";
 import * as m from "./model.js";
+import { Observer } from "./observer.js";
 import { sleep } from "../utils.js";
 
 
@@ -9,7 +10,7 @@ const sketch = (p) => {
 
 	//p.disableFriendlyErrors = true;
 
-	let tree, g, epochs = 18;
+	let tree, g, obs, epochs = 18;
 
 	async function let_it_grow() {
 		while (epochs-- > 0) {
@@ -22,6 +23,9 @@ const sketch = (p) => {
 	p.setup = function() {
 		p.createCanvas(visualViewport && visualViewport.width || window.innerWidth, visualViewport && visualViewport.height || window.innerHeight, p.WEBGL);
 
+		// load observer
+		obs = new Observer(p);
+
 		// load model
 		g = new m.Grammar(cst.grammar_axiom, cst.grammar_rules);
 		tree = new m.Tree(p, cst.commands);
@@ -32,19 +36,23 @@ const sketch = (p) => {
 		// debug
 		window.g = g;
 		window.tree = tree;
+		window.obs = obs;
 
 		// continue growing
 		let_it_grow();
 
 		console.log("tree loaded, drawing");
+
+		//p.debugMode();
 	};
 
 	p.draw = function() {
 		p.background(70);
 
 		// camera & rotation
-		p.camera(-(p.mouseX-p.width/2), p.height, p.height + (p.mouseY-p.height/2), 0, 0, p.height/2, 0, 0, -1);
-		p.rotateZ(p.frameCount * 3e-3);
+		obs.adjustCamera();
+		//p.rotateZ(p.frameCount * 2e-3);
+		//p.orbitControl();
 
 		// ground
 		const size = Math.max(p.width, p.height)*20;
@@ -53,12 +61,6 @@ const sketch = (p) => {
 		p.plane(size, size);
 
 		// light
-		//p.directionalLight("#000", 100, 100, 0);
-		let dirX = (p.mouseX / p.width - 0.5) * 2;
-		let dirY = (p.mouseY / p.height - 0.5) * 2;
-		//p.directionalLight(255, 0, 0, -dirX, -dirY, -1);
-		//p.sphere(50)
-
 		p.lights();
 
 		// finally, the tree
