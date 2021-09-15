@@ -29,8 +29,10 @@ async function loadMelody() {
 	location.hash = idx
 	const seed = seeds[idx]
 	const mel_vec = generateMelodyVector(model, seed, 40)
-	console.log(mel_vec)
-	return vec2midi(mel_vec)
+	//console.log(mel_vec)
+	const stream = vec2midi(mel_vec)
+	detectCadence(stream)
+	return stream
 }
 
 function generateMelodyVector(model, seed, maxlen = 80) {
@@ -74,10 +76,24 @@ function vec2midi(vec) {
 		// add hook
 		let oldPlayMidi = note.playMidi;
 		note.playMidi = function() {
-			document.dispatchEvent(new CustomEvent("notePlayed", {detail: note}));
-			oldPlayMidi.call(note, ...arguments);
+			document.dispatchEvent(new CustomEvent("notePlayed", {detail: this}))
+			if (this.cadence)
+				document.dispatchEvent(new CustomEvent("cadence", {detail: this}))
+			oldPlayMidi.call(this, ...arguments)
 		}
 		stream.append(note)
 	}
 	return stream
+}
+
+function detectCadence(s) {
+	const notes = s.notes
+	for (let i = 0; i < notes.length; i++) {
+		if (notes.get(i).name == "C" && (
+			(notes.get(i-1).name == "D") ||
+			(notes.get(i-1).name == "B") ||
+			(notes.get(i-1).name == "G" && notes.get(i-2).name == "D")
+		))
+			notes.get(i).cadence = true;
+	}
 }
