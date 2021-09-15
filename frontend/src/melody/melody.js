@@ -8,8 +8,6 @@ import seeds from "./seeds.js";
 // load soundfont (patch)
 m21.common.urls.soundfontUrl = "https://gleitz.github.io/midi-js-soundfonts/MusyngKite/";
 
-let notePlayed = new CustomEvent("notePlayed");
-
 export async function init_melody() {
 	let m = await loadMelody()
 	console.log("melody loaded, playing")
@@ -76,7 +74,7 @@ function vec2midi(vec) {
 		// add hook
 		let oldPlayMidi = note.playMidi;
 		note.playMidi = function() {
-			document.dispatchEvent(notePlayed);
+			document.dispatchEvent(new CustomEvent("notePlayed", {detail: note}));
 			oldPlayMidi.call(note, ...arguments);
 		}
 		stream.append(note)
