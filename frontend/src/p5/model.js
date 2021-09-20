@@ -103,6 +103,10 @@ export class Tree {
 		this._lights_colors = latest.concat(this._lights_colors[0]);
 	}
 
+	add_star() {
+		// TODO
+	}
+
 	draw() {
 		const p = this._cvs;
 		p.noFill();
