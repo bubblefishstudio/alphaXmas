@@ -44,7 +44,7 @@ const sketch = (p) => {
 
 		// camera & rotation
 		obs.adjustCamera();
-		//p.rotateZ(p.frameCount * 2e-3);
+		p.rotateZ(p.frameCount * 2e-3);
 		//p.orbitControl();
 
 		// ground
