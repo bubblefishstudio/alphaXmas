@@ -1,4 +1,6 @@
-import { Grammar } from "./model.js";
+import { Grammar } from "./lsystem.js";
+
+export const epochs = 18;
 
 export const commands = new Map([
 	["F", (s, n=1) => {

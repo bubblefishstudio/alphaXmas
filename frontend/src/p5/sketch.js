@@ -1,24 +1,16 @@
 import p5 from "p5";
 
 import * as cst from "./parameters.js";
-import * as m from "./model.js";
+import { Grammar } from "./lsystem.js";
+import { Tree } from "./model.js";
 import { Observer } from "./observer.js";
-import { sleep } from "../utils.js";
 
 
 const sketch = (p) => {
 
 	//p.disableFriendlyErrors = true;
 
-	let tree, g, obs, epochs = 18;
-
-	async function let_it_grow() {
-		while (epochs-- > 0) {
-			g.generate();
-			tree.compile(g.state);
-			await sleep(1000/1.5 * 4);
-		}
-	}
+	let tree, g, obs;
 
 	p.setup = function() {
 		p.createCanvas(visualViewport && visualViewport.width || window.innerWidth, visualViewport && visualViewport.height || window.innerHeight, p.WEBGL);
@@ -27,8 +19,8 @@ const sketch = (p) => {
 		obs = new Observer(p);
 
 		// load model
-		g = new m.Grammar(cst.grammar_axiom, cst.grammar_rules);
-		tree = new m.Tree(p, cst.commands);
+		g = new Grammar(cst.grammar_axiom, cst.grammar_rules);
+		tree = new Tree(p, g, cst.commands);
 
 		// bind note play
 		document.addEventListener("notePlayed", () => tree.rotate_lights());
@@ -40,7 +32,7 @@ const sketch = (p) => {
 		window.obs = obs;
 
 		// continue growing
-		let_it_grow();
+		tree.start_growing(cst.epochs);
 
 		console.log("tree loaded, drawing");
 
