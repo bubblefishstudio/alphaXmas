@@ -25,6 +25,9 @@ export const commands = new Map([
 			s.lights.push(s.turtle.position);
 		}
 	}],
+	["*", (s, n) => {
+		s.star = s.turtle.position;
+	}],
 	["f", (s, n=1) => {
 		s.glue = -1;
 		s.turtle.move(s.len*n);
@@ -70,7 +73,7 @@ export const commands = new Map([
 	}],
 ]);
 
-export const grammar_axiom = Grammar.parse("!2 H T X");
+export const grammar_axiom = Grammar.parse("!2 H T X *");
 
 export const grammar_rules = new Map([
 	["D",  (n=1) => n > 1 ? [["D", n-1]] : [["F", n]]],  // delay stroke
