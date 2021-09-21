@@ -87,7 +87,7 @@ export class Tree {
 
 	add_star(force) {
 		if (this.stopped_growing && this._star === undefined || force) {
-			this._star = new Star(this._cvs, 30, 8, 5);
+			this._star = new Star(this._cvs, 15, 5, 5);
 		}
 	}
 
