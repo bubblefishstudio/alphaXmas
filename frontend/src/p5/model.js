@@ -15,7 +15,7 @@ export class Tree {
 		this._lights_colors = ["red", "yellow", "blue", "purple"];
 		this._star_position = new p5.Vector(0,0,0);
 
-		this.add_star(); // debug
+		this.add_star(true); // debug
 	}
 
 	_compile() {
@@ -70,6 +70,7 @@ export class Tree {
 			this._compile();
 			await sleep(1000/1.5 * 4);
 		}
+		this.stopped_growing = true;
 	}
 
 	handle_note(note) {
@@ -84,8 +85,10 @@ export class Tree {
 		this._lights_colors = latest.concat(this._lights_colors[0]);
 	}
 
-	add_star() {
-		this._star = new Star(this._cvs, 30, 8, 5);
+	add_star(force) {
+		if (this.stopped_growing && this._star === undefined || force) {
+			this._star = new Star(this._cvs, 30, 8, 5);
+		}
 	}
 
 	draw() {
