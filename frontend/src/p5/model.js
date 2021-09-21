@@ -174,15 +174,17 @@ class Star {
 
 		// make star holder
 		p.stroke("#f7f704");
-		p.strokeWeight(2);
+		p.strokeWeight(1);
+		p.noFill();
 		p.line(0,0,0, 0,0,this.width);
 		p.translate(0,0,this.width);
 
 		// place star
 		p.rotateZ(Math.PI/this.tips); // align wedge with x-axis
 		p.rotateY(-Math.PI/2); // put star vertically
-		p.fill("#f7f704");
-		p.strokeWeight(0.01);
+		// TODO: filling the star is bogus, every face gets the same "light"
+		//p.fill("#f7f704");
+		//p.strokeWeight(0.2);
 		p.model(this.geometry);
 	}
 }
