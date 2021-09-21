@@ -23,8 +23,7 @@ const sketch = (p) => {
 		tree = new Tree(p, g, cst.commands);
 
 		// bind note play
-		document.addEventListener("notePlayed", () => tree.rotate_lights());
-		document.addEventListener("cadence", () => tree.add_star());
+		document.addEventListener("notePlayed", (e) => tree.handle_note(e.detail));
 
 		// debug
 		window.g = g;

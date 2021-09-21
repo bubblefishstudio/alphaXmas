@@ -77,8 +77,6 @@ function vec2midi(vec) {
 		let oldPlayMidi = note.playMidi;
 		note.playMidi = function() {
 			document.dispatchEvent(new CustomEvent("notePlayed", {detail: this}))
-			if (this.cadence)
-				document.dispatchEvent(new CustomEvent("cadence", {detail: this}))
 			oldPlayMidi.call(this, ...arguments)
 		}
 		stream.append(note)

@@ -72,6 +72,13 @@ export class Tree {
 		}
 	}
 
+	handle_note(note) {
+		if (note.cadence)
+			this.add_star();
+		if (note.isNote)
+			this.rotate_lights();
+	}
+
 	rotate_lights() {
 		let latest = this._lights_colors.slice(1);
 		this._lights_colors = latest.concat(this._lights_colors[0]);
