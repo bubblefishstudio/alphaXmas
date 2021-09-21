@@ -15,7 +15,7 @@ export class Tree {
 		this._lights_colors = ["red", "yellow", "blue", "purple"];
 		this._star_position = new p5.Vector(0,0,0);
 
-		this.add_star(true); // debug
+		//this.add_star(true); // debug
 	}
 
 	_compile() {
