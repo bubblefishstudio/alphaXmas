@@ -8,3 +8,46 @@ canvas {
 .loadingSoundfont {
 	display: none;
 }
+
+.wrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.2);
+	z-index: 10;
+	display: flex;
+}
+
+.wrapper > * {
+	margin: auto;
+}
+
+.loading .loading-wrapper {
+	display: flex;
+}
+
+.loading-wrapper, .loading .start-wrapper, .started .start-wrapper {
+	display: none;
+}
+
+#start-btn {
+	width: 4em;
+	height: 2em;
+	font-size: 3em;
+	color: #fff;
+	background-color: rgba(255,255,255,0.1);
+	border: none;
+	border-radius: 1em;
+	appearance: none;
+	cursor: pointer;
+}
+
+#start-btn:hover {
+	background-color: rgba(255,255,255,0.2);
+}
+
+#start-btn:active {
+	background-color: rgba(255,255,255,0.5);
+}
