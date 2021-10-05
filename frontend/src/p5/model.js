@@ -53,6 +53,7 @@ export class Tree {
 		// prepare geometries (see patches.js)
 		const p = this._cvs;
 		const addVtx = (v) => p.vertex(v.x, v.y, v.z);
+		p.stroke(0);
 
 		// tree branches
 		p.beginShape(p.LINES);
