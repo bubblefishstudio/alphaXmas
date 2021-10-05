@@ -18,15 +18,15 @@ export class Tree {
 		this._lights_colors = ["red", "yellow", "blue", "purple"];
 		this._epochs = epochs;
 		this._current_epoch = 0;
-
-		this._compile();
+		this.loaded = false;
 	}
 
-	_compile() {
+	setup() {
 		for (let i = 0; i < this._epochs; i++) {
 			this._grammar.generate();
 			this._compile_step(i, this._grammar.state);
 		}
+		this.loaded = true;
 	}
 
 	_compile_step(step, grammar_state) {

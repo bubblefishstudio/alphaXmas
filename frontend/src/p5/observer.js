@@ -6,6 +6,9 @@ export class Observer {
 		this.scale = 0.8;
 		this._cvs = cvs;
 		this._position = new p5.Vector(0,0);
+	}
+
+	setup() {
 		this._cam = this._cvs.createCapture(this._cvs.VIDEO, () => this._setupNet());
 		this._cam.hide();
 	}

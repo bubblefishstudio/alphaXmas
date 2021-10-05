@@ -12,30 +12,35 @@ const sketch = (p) => {
 
 	let tree, g, obs;
 
-	p.setup = function() {
-		p.createCanvas(visualViewport && visualViewport.width || window.innerWidth, visualViewport && visualViewport.height || window.innerHeight, p.WEBGL);
-
-		// load observer
-		obs = new Observer(p);
-
-		// load model
-		g = new Grammar(cst.grammar_axiom, cst.grammar_rules);
-		tree = new Tree(p, g, cst.commands, cst.epochs);
+	async function setup_model() {
+		g.generate(); // burn one step to get some leaves
+		obs.setup();
+		tree.setup();
 
 		// bind note play
 		document.addEventListener("notePlayed", (e) => tree.handle_note(e.detail));
 
-		// debug
+		// bind tree growing
+		document.addEventListener("start", () => tree.start_growing());
+
+		console.log("sketch loaded");
+		document.dispatchEvent(new CustomEvent("sketch-loaded"));
+	}
+
+	p.setup = function() {
+		p.createCanvas(visualViewport && visualViewport.width || window.innerWidth, visualViewport && visualViewport.height || window.innerHeight, p.WEBGL);
+
+		// create objects
+		obs = new Observer(p);
+		g = new Grammar(cst.grammar_axiom, cst.grammar_rules);
+		tree = new Tree(p, g, cst.commands, cst.epochs);
+
+		// debug references
 		window.g = g;
 		window.tree = tree;
 		window.obs = obs;
 
-		// bind tree growing
-		document.addEventListener("start", () => tree.start_growing());
-
-		console.log("tree loaded, drawing");
-
-		//p.debugMode();
+		setTimeout(setup_model, 50);
 	};
 
 	p.draw = function() {
@@ -56,7 +61,9 @@ const sketch = (p) => {
 		p.lights();
 
 		// finally, the tree
-		tree.draw();
+		if (tree.loaded) {
+			tree.draw();
+		}
 	};
 
 };

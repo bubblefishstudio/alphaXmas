@@ -24,6 +24,8 @@ export async function init_melody() {
 		m.playStream({done: loopPlay, tempo: 90})
 	}
 	document.addEventListener("start", loopPlay)
+
+	document.dispatchEvent(new CustomEvent("melody-loaded"))
 }
 
 async function loadMelody() {
