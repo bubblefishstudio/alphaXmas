@@ -30,8 +30,8 @@ const sketch = (p) => {
 		window.tree = tree;
 		window.obs = obs;
 
-		// continue growing
-		tree.start_growing();
+		// bind tree growing
+		document.addEventListener("start", () => tree.start_growing());
 
 		console.log("tree loaded, drawing");
 

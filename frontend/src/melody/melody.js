@@ -10,17 +10,20 @@ m21.common.urls.soundfontUrl = "https://gleitz.github.io/midi-js-soundfonts/Musy
 
 export async function init_melody() {
 	let m = await loadMelody()
-	console.log("melody loaded, playing")
+	console.log("melody loaded")
+
 	await new Promise(resolve =>
 		m21.miditools.loadSoundfont("music_box", i => {
 			m.instrument = i
 			resolve()
 		})
 	)
+	console.log("instrument loaded")
+
 	const loopPlay = () => {
 		m.playStream({done: loopPlay, tempo: 90})
 	}
-	loopPlay()
+	document.addEventListener("start", loopPlay)
 }
 
 async function loadMelody() {
