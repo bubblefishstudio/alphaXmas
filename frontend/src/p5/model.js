@@ -5,20 +5,31 @@ import { sleep } from "../utils.js";
 import { Turtle } from "./lsystem.js";
 
 export class Tree {
-	constructor(cvs, gram, cmds) {
+	constructor(cvs, gram, cmds, epochs) {
 		this._cvs = cvs;
 		this._grammar = gram;
 		this._cmds = cmds;
-		this._branch_geom = new p5.Geometry();
-		this._leaf_geom = new p5.Geometry();
-		this._lights_vtx = new p5.Geometry();
+		this._geometries = new Map([
+			["branches", []],
+			["leaves", []],
+			["lights", []],
+			["star", []]
+		]);
 		this._lights_colors = ["red", "yellow", "blue", "purple"];
-		this._star_position = new p5.Vector(0,0,0);
+		this._epochs = epochs;
+		this._current_epoch = 0;
 
-		//this.add_star(true); // debug
+		this._compile();
 	}
 
 	_compile() {
+		for (let i = 0; i < this._epochs; i++) {
+			this._grammar.generate();
+			this._compile_step(i, this._grammar.state);
+		}
+	}
+
+	_compile_step(step, grammar_state) {
 		let state = {
 			len: this._cvs.height / 21,
 			angle: 15,
@@ -32,7 +43,7 @@ export class Tree {
 		};
 
 		// compute vertices from turtle movements
-		for (let [op, arg] of this._grammar.state) {
+		for (let [op, arg] of grammar_state) {
 			let action = this._cmds.get(op);
 			if (action instanceof Function) {
 				action(state, arg);
@@ -47,27 +58,23 @@ export class Tree {
 		p.beginShape(p.LINES);
 		p.noFill();
 		state.vtx.forEach(addVtx);
-		this._branch_geom = p.saveShape();
+		this._geometries.get("branches")[step] = p.saveShape();
 
 		// tree leafs
 		p.beginShape(p.LINES);
 		p.noFill();
 		state.leaf_vtx.forEach(addVtx);
-		this._leaf_geom = p.saveShape();
+		this._geometries.get("leaves")[step] = p.saveShape();
 
 		// tree lights
-		this._lights_vtx = state.lights.map(v => v.add(0,0,-3));
+		this._geometries.get("lights")[step] = state.lights.map(v => v.add(0,0,-3));
 
 		// tree star position
-		this._star_position = state.star;
-
-		return this;
+		this._geometries.get("star")[step] = state.star;
 	}
 
-	async start_growing(epochs) {
-		while (epochs-- > 0) {
-			this._grammar.generate();
-			this._compile();
+	async start_growing() {
+		for (this._current_epoch = 0; this._current_epoch < this._epochs - 1; this._current_epoch++) {
 			await sleep(1000/1.5 * 4);
 		}
 		this.stopped_growing = true;
@@ -98,23 +105,24 @@ export class Tree {
 		// draw tree branches
 		p.stroke(150, 100, 0);
 		p.strokeWeight(3);
-		p.model(this._branch_geom);
+		p.model(this._geometries.get("branches")[this._current_epoch]);
 
 		// draw tree leafs
 		p.stroke(50, 200, 100);
 		p.strokeWeight(0.5);
-		p.model(this._leaf_geom);
+		p.model(this._geometries.get("leaves")[this._current_epoch]);
 
 		// draw tree lights
 		p.strokeWeight(5);
-		for (let i = 0; i < this._lights_vtx.length; i++) {
+		const lights_vtx = this._geometries.get("lights")[this._current_epoch];
+		for (let i = 0; i < lights_vtx.length; i++) {
 			p.stroke(this._lights_colors[i % this._lights_colors.length]);
-			p.point(this._lights_vtx[i]);
+			p.point(lights_vtx[i]);
 		}
 
 		// draw star
 		if (this._star !== undefined) {
-			this._star.draw(this._star_position);
+			this._star.draw(this._geometries.get("star")[this._current_epoch]);
 		}
 	}
 }

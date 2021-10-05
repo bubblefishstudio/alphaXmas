@@ -20,7 +20,7 @@ const sketch = (p) => {
 
 		// load model
 		g = new Grammar(cst.grammar_axiom, cst.grammar_rules);
-		tree = new Tree(p, g, cst.commands);
+		tree = new Tree(p, g, cst.commands, cst.epochs);
 
 		// bind note play
 		document.addEventListener("notePlayed", (e) => tree.handle_note(e.detail));
@@ -31,7 +31,7 @@ const sketch = (p) => {
 		window.obs = obs;
 
 		// continue growing
-		tree.start_growing(cst.epochs);
+		tree.start_growing();
 
 		console.log("tree loaded, drawing");
 
