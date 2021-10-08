@@ -21,11 +21,11 @@ export const commands = new Map([
 		s.turtle.move(-s.len*n);  // restore previous position
 	}],
 	["O", (s, n) => {
-		if (Math.random() < 0.3) {
+		if (Math.random() < n) {
 			s.lights.push(s.turtle.position);
 		}
 	}],
-	["*", (s, n) => {
+	["*", (s, _) => {
 		s.star = s.turtle.position;
 	}],
 	["f", (s, n=1) => {
@@ -54,15 +54,15 @@ export const commands = new Map([
 	["\\", (s, n) => {
 		s.turtle.roll(-n);
 	}],
-	["|", (s, n) => {
+	["|", (s, _) => {
 		s.glue = -1;
 		s.turtle.flip();
 	}],
-	["[", (s, n) => {
+	["[", (s, _) => {
 		s.stack.push([s.turtle.copy(), s.glue]);
 		s.glue = -1;
 	}],
-	["]", (s, n) => {
+	["]", (s, _) => {
 		[s.turtle, s.glue] = s.stack.pop();
 	}],
 	["!", (s, n=0.9) => {
@@ -86,6 +86,6 @@ export const grammar_rules = new Map([
 	["I",  (_) => Grammar.parse("+n X !0.6 I ?0.6", Math.random()*4-2)],
 	["V",  (_) => Grammar.parse("D0.2 [ /20 +50 X ! I I ? ] D0.1 [ \\20 -50 X ! I I ? ] !0.8 Y ?0.8")],
 
-	["X",  (_) => Grammar.parse("^n E E E E E E D0.05 O", Math.random()*3)],
+	["X",  (_) => Grammar.parse("^n E E E E E E D0.05 O0.3", Math.random()*3)],
 	["E",  (_) => Grammar.parse("/60 [ &70 L0.5 ] F0.05")],
 ]);
